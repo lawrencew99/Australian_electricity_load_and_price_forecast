@@ -1,0 +1,53 @@
+# NEM 负荷与 5min RRP 预测脚手架默认配置（路径相对 nem_forecast 工程根目录）
+
+regions:
+  - NSW
+  - VIC
+  - QLD
+  - SA
+
+freq: "5min"
+freq_minutes: 5
+
+# 预测 horizon：键为标签，值为向前预测的 5 分钟步数
+horizons:
+  "24h": 288   # 24 * 60 / 5
+  "48h": 576
+
+spike_threshold_aud: 300
+
+rolling_cv:
+  n_splits: 3
+  train_min_periods: 400    # 监督样本行数阈值（占位；数据很短时可再调低）
+  gap_steps: 288            # 训练末端与验证起点之间的间隙（步），减轻泄漏
+
+paths:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+
+# CSV 占位：期望文件名 glob，例如 nem_{region}_5min.csv
+csv_glob: "nem_{region}_5min.csv"
+
+random_seed: 42
+
+# LSTM / TFT 占位训练
+torch:
+  hidden_size: 64
+  num_layers: 2
+  dropout: 0.1
+  learning_rate: 0.001
+  max_epochs: 5
+  batch_size: 64
+
+sarima:
+  order: [1, 0, 1]
+  seasonal_order: [1, 0, 1, 288]  # 日季节（288 个 5min 步）
+
+xgboost:
+  n_estimators: 100
+  max_depth: 6
+  learning_rate: 0.1
+
+risk:
+  alert_upper_quantile: 0.9   # P90 超过某倍数则预警（与 alerts 模块默认逻辑配合）
+  exposure_scale_hint: "reduce_when_spike_prob_high"
