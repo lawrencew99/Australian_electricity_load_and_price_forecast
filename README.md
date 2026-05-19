@@ -1,6 +1,6 @@
 # nem_forecast
 
-澳大利亚 NEM 区域负荷与 5 分钟 RRP 预测的 **Python 工程脚手架**：配置驱动、CSV 占位加载、预处理与滚动验证骨架、SARIMA / XGBoost / LSTM / TFT 占位、尖峰两阶段与分位数预警占位。
+澳大利亚 NEM 区域负荷与 5 分钟 RRP 预测的 **Python 工程包**：配置驱动、CSV 占位加载、预处理与滚动验证骨架、SARIMA / XGBoost / LSTM / TFT 占位、尖峰两阶段与分位数预警占位。
 
 ## 约定
 
